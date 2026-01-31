@@ -4,9 +4,8 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import ast
 import requests
-
-
 import os
+
 TMDB_API_KEY = os.environ.get("TMDB_API_KEY")
 
 def load_data():
@@ -118,19 +117,16 @@ def fetch_poster(movie_id):
     params = {"api_key": TMDB_API_KEY}
     response = requests.get(url, params=params)
 
-    print("TMDB status:", response.status_code)
-
     if response.status_code != 200:
-        print("TMDB error:", response.text)
         return None
 
     data = response.json()
     poster_path = data.get("poster_path")
-    print("Poster path:", poster_path)
 
     if poster_path:
         return "https://image.tmdb.org/t/p/w500" + poster_path
     return None
+
 
 
 def recommend(movie_title: str) -> list:
