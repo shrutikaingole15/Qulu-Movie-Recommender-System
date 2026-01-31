@@ -2,6 +2,9 @@
 
 **Qulu** is a premium, Netflix-style movie recommendation web application. It suggests movies based on content similarity using machine learning, presented in a sleek, dark-themed user interface with horizontal scrolling shelves.
 
+🚀 **Live App:**  
+👉 https://qulu-movie-recommender-systemm.streamlit.app/
+
 ## 🌟 Features
 
 -   **Netflix-Inspired UI**: Dark theme, edge-to-edge layout, and premium typography.
