@@ -5,10 +5,9 @@ from sklearn.metrics.pairwise import cosine_similarity
 import ast
 import requests
 
+
 import os
 TMDB_API_KEY = os.environ.get("TMDB_API_KEY")
-
-
 
 def load_data():
     # Helper to allow importing without running immediately if needed, 
@@ -115,15 +114,24 @@ movies_df = movies[['movie_id', 'title', 'soup']].copy()
 indices = pd.Series(movies_df.index, index=movies_df['title'])
 
 def fetch_poster(movie_id):
-    try:
-        url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={TMDB_API_KEY}"
-        data = requests.get(url).json()
-        poster_path = data.get('poster_path')
-        if poster_path:
-            return f"https://image.tmdb.org/t/p/w500{poster_path}"
+    url = f"https://api.themoviedb.org/3/movie/{movie_id}"
+    params = {"api_key": TMDB_API_KEY}
+    response = requests.get(url, params=params)
+
+    print("TMDB status:", response.status_code)
+
+    if response.status_code != 200:
+        print("TMDB error:", response.text)
         return None
-    except:
-        return None
+
+    data = response.json()
+    poster_path = data.get("poster_path")
+    print("Poster path:", poster_path)
+
+    if poster_path:
+        return "https://image.tmdb.org/t/p/w500" + poster_path
+    return None
+
 
 def recommend(movie_title: str) -> list:
     try:
